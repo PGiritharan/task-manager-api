@@ -34,11 +34,11 @@ router.post('/users',async (req,res)=>{
 router.post('/users/login', async (req,res)=>{
     try {
         const user = await User.findByCredentials(req.body.email,req.body.password);
-        if(user.error) return res.send(user.error);
+        if(user.error) return res.status(400).send(user.error);
         const token = await user.generateAuthToken();
         res.send({user,token});
     } catch (error) {
-        res.send(error);
+        res.status(400).send(error);
     }
 });
 
